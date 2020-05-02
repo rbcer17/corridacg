@@ -1,0 +1,90 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Graficos das Corridas
+Entrada de dados criar objeto corridas
+```{r}
+library(readxl)
+form_corrida_para_r <- read_excel("form-corrida-para-r.xlsx")
+corridas <- form_corrida_para_r
+```
+Colocar legendas e criar objeto corridas2
+```{r}
+library(expss)
+corridas2 <- apply_labels(corridas,
+                          idade= "Idade",
+                          clasidade= "Classe Idade",
+                          estadocivil= "Estado Civil",
+                          emae="É Mãe?",
+                          numfilhos= "Num Filhos",
+                          tipoparto= "Tipo Parto",
+                          teveepisotiomia= "Episotiomia",
+                          cirurgiaginecologica= "CirurgiaG",
+                          tipoativfisica= "AtivFisic",
+                          freqsemcorr= "Freq Corr Sem",
+                          clasfreqcor= "Cat Freq Corr",
+                          anoscorrendo= "Corre Anos",
+                          motivocorr= "Motiv Corr",
+                          kmsemana= "Km Semana",
+                          claskmsem= "Km Cat",
+                          idadeiniciocorrida= "Idade Comecou",
+                          vontadeurinarcorrida= "Vont Urinar",
+                          perdaurinacorrida= "Perda Urina",
+                          perdiantescorrer= "Perdia Antes",
+                          quandoperdeurina= "Quando Perde")
+```
+
+Agora fazer uma tabela com os dados
+
+```{r}
+cro(corridas2$vontadeurinarcorrida,corridas2$perdaurinacorrida)
+cro_tpct(corridas2$vontadeurinarcorrida,corridas2$perdaurinacorrida)
+```
+
+```{r}
+corridas2 %>% 
+  tab_cells(vontadeurinarcorrida) %>% 
+  tab_cols(total(), perdaurinacorrida) %>% 
+  tab_stat_cpct() %>% 
+  tab_pivot()
+```
+
+
+
+Tentar o comando table
+
+```{r}
+compar1 <- table(corridas2$vontadeurinarcorrida,corridas2$perdaurinacorrida)
+ftable(compar1)
+summary(compar1)
+```
+
+Nova comparaćão perda de urina por classe de idade
+
+```{r}
+compar2 <- table(corridas2$clasidade,corridas2$perdaurinacorrida)
+ftable(compar2)
+summary(compar2)
+```
+Nova comparaćão perda de urina por distancia percorrida
+
+```{r}
+compar3 <- table(corridas2$claskmsem,corridas2$perdaurinacorrida)
+ftable(compar3)
+summary(compar3)
+```
+Mais uma comparacao perda de urina por freq corrida semanal
+
+```{r}
+compar4 <- table(corridas2$clasfreqcor,corridas2$perdaurinacorrida)
+ftable(compar4)
+summary(compar4)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
