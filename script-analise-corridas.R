@@ -1,5 +1,5 @@
 #Analise dados corrida para projeto Cristine 25 abril 2020
-#
+#info atualizado no dia 02 de maio
 library(readxl)
 form_corrida_para_r <- read_excel("form-corrida-para-r.xlsx")
 corridas <- form_corrida_para_r
